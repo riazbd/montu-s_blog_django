@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block title %} {{ post.title }}{% endblock %} 
+{% block content %}
+<img src="{{ post.image.url }}" height="200" width="200" class="" alt="{{post.title}}">
+<h1>{{ post.title }}</h1>
+
+<small>By: {{ post.author }}</small>
+<br />
+<small>{{ post.post_date }}</small>
+<br />
+<small><a href="{% url 'update-post' post.pk %}">edit</a></small>
+<hr />
+<br />
+{{ post.body | safe }}
+<br />
+<br />
+<br />
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<h2>Comments</h2>
+{% for comment in post.comment_set.all %}
+<b>{{ comment.name }}</b> said <b>{{ comment.created_on|timesince }} ago</b>
+<p>{{ comment.comment }}</p>
+{% empty %}
+<p>Feel free to leave the first comment!</p>
+{% endfor %}
+<hr>
+<h3>Add a comment</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
