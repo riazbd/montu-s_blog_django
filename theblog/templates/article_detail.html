@@ -1,5 +1,143 @@
 {% extends 'base.html' %} {% block title %} {{ post.title }}{% endblock %} 
 {% block content %}
+
+<!-- template -->
+<div class="row blog-entries element-animate">
+    <div class="col-md-12 col-lg-8 main-content">
+        <img src="{{ post.image.url }}" alt="Image" class="img-fluid mb-5">
+         <div class="post-meta">
+                    <span class="author mr-2"><img src="{{ post.author.profile.image.url }}" alt="Colorlib" class="mr-2"> {{ post.author }}</span>&bullet;
+                    <span class="mr-2">{{ post.post_date }} </span> &bullet;
+                    <span class="ml-2"><span class="fa fa-comments"></span> {{ post.comment_set.all.count }}</span>
+                  </div>
+        <h1 class="mb-4">{{ post.title }}</h1>
+        <a class="category mb-5" href="#">Food</a> <a class="category mb-5" href="#">Travel</a>
+       
+        <div class="post-content-body">
+          {{ post.body | safe}}
+        </div>
+
+        
+        <!-- <div class="pt-5">
+          <p>Categories:  <a href="#">Food</a>, <a href="#">Travel</a>  Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+        </div> -->
+
+
+        <div class="pt-5">
+          <h3 class="mb-5">{{ post.comment_set.all.count }} Comments</h3>
+          <ul class="comment-list">
+            {% for comment in post.comment_set.all %}
+            <li class="comment">
+              <div class="vcard">
+                {% if comment.name.lower.strip == "admin" %}
+                <img src="{{ post.author.profile.image.url }}">
+                {% else%}
+                <img src="https://loading.io/s/icon/81fuim.svg" alt="Image placeholder">
+                {% endif %}
+              </div>
+              <div class="comment-body">
+                  
+                <h3>{{ comment.name }}</h3>
+                <div class="meta">{{ comment.created_on|timesince }} ago</div>
+                <p>{{ comment.comment }}</p>
+                <!-- <p><a href="#" class="reply rounded">Reply</a></p> -->
+              </div>
+              
+            </li>
+            {% endfor %}
+
+            <!-- <li class="comment">
+              <div class="vcard">
+                <img src="images/person_1.jpg" alt="Image placeholder">
+              </div>
+              <div class="comment-body">
+                <h3>Jean Doe</h3>
+                <div class="meta">January 9, 2018 at 2:21pm</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                <p><a href="#" class="reply rounded">Reply</a></p>
+              </div>
+
+              <ul class="children">
+                <li class="comment">
+                  <div class="vcard">
+                    <img src="images/person_1.jpg" alt="Image placeholder">
+                  </div>
+                  <div class="comment-body">
+                    <h3>Jean Doe</h3>
+                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                    <p><a href="#" class="reply rounded">Reply</a></p>
+                  </div>
+
+
+                  <ul class="children">
+                    <li class="comment">
+                      <div class="vcard">
+                        <img src="images/person_1.jpg" alt="Image placeholder">
+                      </div>
+                      <div class="comment-body">
+                        <h3>Jean Doe</h3>
+                        <div class="meta">January 9, 2018 at 2:21pm</div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                        <p><a href="#" class="reply rounded">Reply</a></p>
+                      </div>
+
+                        <ul class="children">
+                          <li class="comment">
+                            <div class="vcard">
+                              <img src="images/person_1.jpg" alt="Image placeholder">
+                            </div>
+                            <div class="comment-body">
+                              <h3>Jean Doe</h3>
+                              <div class="meta">January 9, 2018 at 2:21pm</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                              <p><a href="#" class="reply rounded">Reply</a></p>
+                            </div>
+                          </li>
+                        </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <li class="comment">
+              <div class="vcard">
+                <img src="images/person_1.jpg" alt="Image placeholder">
+              </div>
+              <div class="comment-body">
+                <h3>Jean Doe</h3>
+                <div class="meta">January 9, 2018 at 2:21pm</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                <p><a href="#" class="reply rounded">Reply</a></p>
+              </div>
+            </li> -->
+          </ul>
+          <!-- END comment-list -->
+          
+          <div class="comment-form-wrap pt-5" id="add-comment">
+            <h3 class="mb-5">Leave a comment</h3>
+            <form action="" class="p-5 bg-light" method="post">
+              <div class="form-group">
+                <!-- <label for="name">Name *</label>
+                <input type="text" class="form-control" id="name"> -->
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit"class="btn btn-primary">Post Comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- END main-content -->
+
+</div>
+
+
+<!-- end -->
+<!-- 
 <img src="{{ post.image.url }}" height="200" width="200" class="" alt="{{post.title}}">
 <h1>{{ post.title }}</h1>
 
@@ -28,5 +166,5 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
-</form>
-{% endblock %}
+</form> -->
+{% endblock %} 

@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from .models import Post, Comment, Category
 
 choices = Category.objects.all().values_list("name", "name")
@@ -39,6 +40,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["name", "comment"]
+
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "comment": forms.Textarea(attrs={"class": "form-control"}),
+        }
 
     def __init__(self, *args, **kwargs):
         """Save the request with the form so it can be accessed in clean_*()"""

@@ -87,4 +87,4 @@ class PostComment(SingleObjectMixin, FormView):
 
     def get_success_url(self):
         post = self.get_object()
-        return reverse("article-detail", kwargs={"pk": post.pk}) + "#comments"
+        return reverse("article-detail", kwargs={"pk": post.pk}) + "#add-comment"
